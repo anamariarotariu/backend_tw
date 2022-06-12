@@ -30,9 +30,9 @@ async function getUserByUsername(req, res, username) {
 }
 // @desc Add a new user in database
 // @route POST /api/users/add
-async function addUser(req, res, firstname, lastname, username, password, cnp, phonenumber, adress, country, email) {
+async function addUser(req, res, firstname, lastname, username, pass, cnp, phonenumber, adress, country, email) {
     try {
-        newUser = await User.insertUserInDb(firstname, lastname, username, password, cnp, phonenumber, adress, country, email);
+        newUser = await User.insertUserInDb(firstname, lastname, username, pass, cnp, phonenumber, adress, country, email);
         if (!newUser) {
             res.writeHead(409, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ message: "User was not added in db" }));
@@ -56,7 +56,6 @@ async function removeUser(req, res, username) {
         if (!deletedUser) {
             res.writeHead(409, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ message: "User was not removed from db" }));
-
         } else {
             res.writeHead(204, { "Content-Type": "application/json" });
             res.end(JSON.stringify(deletedUser));

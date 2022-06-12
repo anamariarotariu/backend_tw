@@ -19,7 +19,7 @@ const server = http.createServer((req, res) => {
         });
         req.on("end", () => {
             const result = JSON.parse(body);
-            addUser(req, res, result.firstname, result.lastname, result.username, result.password, result.cnp, result.phonenumber, result.adress, result.country, result.email)
+            addUser(req, res, result.firstname, result.lastname, result.username, result.pass, result.cnp, result.phonenumber, result.adress, result.country, result.email)
         })
     } else if (req.url.match(/\/api\/users\/delete\/\w+/) && req.method === "DELETE") {
         const username = req.url.split("/")[4];

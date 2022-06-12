@@ -1,12 +1,12 @@
 const db = require("mysql");
 const pool = db.createPool({
     user: "root",
-    host: "https://2284-79-112-101-148.eu.ngrok.io",
+    host: "5.tcp.eu.ngrok.io",
     database: "tw",
-    password: "",
-    port: 8080,
-    ssl: true,
+    password: "password",
+    port: 13384,
     timeout: 60 * 60 * 1000,
+    ssl: true
 })
 
 // function for creating tables if they don't exist
@@ -14,7 +14,7 @@ const pool = db.createPool({
 let createTables = () => {
 
     pool.query(
-        "CREATE TABLE IF NOT EXISTS users (firstname VARCHAR(50) NOT NULL,lastname VARCHAR(50) NOT NULL,username VARCHAR(50) NOT NULL,password VARCHAR(50)NOT NULL,cnp int (13),phonenumber int(15),adress VARCHAR(50) NOT NULL, country VARCHAR(50) NOT NULL,email,VARCHAR(50) NOT NULL,PRIMARY KEY(username))"
+        "CREATE TABLE IF NOT EXISTS users (firstname VARCHAR(50) NOT NULL,lastname VARCHAR(50) NOT NULL,username VARCHAR(50) NOT NULL,pass VARCHAR(50)NOT NULL,cnp int (13),phonenumber int(15),adress VARCHAR(50) NOT NULL, country VARCHAR(50) NOT NULL,email VARCHAR(50),PRIMARY KEY(username))"
     );
     pool.query(
         "CREATE TABLE IF NOT EXISTS bets (id INT(15) NOT NULL, username VARCHAR(50) NOT NULL, racename VARCHAR(50) NOT NULL, date DATE NOT NULL, winner VARCHAR(50) NOT NULL, userbet VARCHAR(50) NOT NULL, amount int(3) NOT NULL, result VARCHAR(50) NOT NULL,)"
@@ -135,10 +135,10 @@ let getRaceByName = (status) => {
 
 // function for inserting a new user in db
 
-let insertUser = (firstname, lastname, username, password, cnp, phonenumber, adress, country, email) => {
-    const sqlQuery = "INSERT INTO users (firstname, lastname, username, password, cnp, phonenumber, adress, country, email) VALUES (?,?,?,?,?,?,?,?,?)";
+let insertUser = (firstname, lastname, username, pass, cnp, phonenumber, adress, country, email) => {
+    const sqlQuery = "INSERT INTO users (firstname, lastname, username, pass, cnp, phonenumber, adress, country, email) VALUES (?,?,?,?,?,?,?,?,?)";
     return new Promise((resolve, reject) => {
-        pool.query(sqlQuery, [firstname, lastname, username, password, cnp, phonenumber, adress, country, email], (error, newUser) => {
+        pool.query(sqlQuery, [firstname, lastname, username, pass, cnp, phonenumber, adress, country, email], (error, newUser) => {
             if (error) {
                 return reject(error);
             }
@@ -198,6 +198,7 @@ let deleteUser = (username) => {
             if (error) {
                 return reject(error);
             }
+            console.log("Deleted user from db = " + deletedUser);
             return resolve(deletedUser);
         })
     })

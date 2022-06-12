@@ -10,9 +10,9 @@ function findUserByUsername(username) {
     users.createTables();
     return users.getUserByUsername(username);
 }
-function insertUserInDb(firstname, lastname, username, password, cnp, phonenumber, adress, country, email) {
+function insertUserInDb(firstname, lastname, username, pass, cnp, phonenumber, adress, country, email) {
     users.createTables();
-    return users.insertUser(firstname, lastname, username, password, cnp, phonenumber, adress, country, email);
+    return users.insertUser(firstname, lastname, username, pass, cnp, phonenumber, adress, country, email);
 }
 function deleteUserFromDb(username) {
     users.createTables();
